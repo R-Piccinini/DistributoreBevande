@@ -6,15 +6,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int nBevande = 1;
+		int nBevande = 2;
 		float prezzo[] = new float[nBevande];
 		int codiceBevande[] = new int[nBevande];
 		int qntBevande[] = new int[nBevande];
 		int i = 0;
 		String metodoPagamento, risposta;
 		float contInseriti, resto, credChiavetta;
-		System.out.println("inserisci credito chiavetta"); // approssimazione di un credito pre esistente della
-		// chiavetta
+		System.out.println("inserisci credito chiavetta"); // approssimazione di un credito pre esistente della chiavetta
 		credChiavetta = sc.nextFloat();
 		sc.nextLine();
 
@@ -50,9 +49,9 @@ public class Main {
 							contInseriti = sc.nextFloat();
 							sc.nextLine();
 							while (contInseriti < prezzo[i]) {
-								System.out.println((prezzo[i] - contInseriti) + "€ rimanenti"); // aggiunta monete
-								// rimanenti
+								System.out.println((prezzo[i] - contInseriti) + "€ rimanenti"); // aggiunta monete rimanenti
 								float tempCont = sc.nextFloat();
+								sc.nextLine();
 								contInseriti = contInseriti + tempCont;
 
 							}
@@ -61,16 +60,17 @@ public class Main {
 								System.out.println("il resto è : " + resto);
 								System.out.println("ritirare bevanda");
 								qntBevande[i]--; // riduzione stock bevanda
-							} else
+							} else {
 								System.out.println("ritirare bevanda");
 							qntBevande[i]--; // riduzione stock bevanda
+							}
 
 						} else {
-							while (credChiavetta < prezzo[i]) { // credito insufficiente procedura per ricaricare
-								// chiavetta
+							while (credChiavetta < prezzo[i]) { // credito insufficiente procedura per ricaricare chiavetta
 								System.out.println("Credito insufficiente");
 								System.out.println("Ricaricare chiavetta inserire contanti");
 								float tempCred = sc.nextFloat();
+								sc.nextLine();
 								credChiavetta = credChiavetta + tempCred;
 							}
 
@@ -92,6 +92,5 @@ public class Main {
 
 		} while (risposta.equals("si")); // check per il ciclo
 		sc.close();
-	}// fine main
-
-}// fine class
+	}
+}
