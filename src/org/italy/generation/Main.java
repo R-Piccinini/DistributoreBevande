@@ -28,35 +28,36 @@ public class Main {
 			sc.nextLine();
 		}
 
-			System.out.println("inserisci credito chiavetta"); // approssimazione di un credito pre esistente della
-			// chiavetta
-			credChiavetta = sc.nextFloat();
-			sc.nextLine();
-
-		
+		System.out.println("inserisci credito chiavetta"); // approssimazione di un credito pre esistente della
+		// chiavetta
+		credChiavetta = sc.nextFloat();
+		sc.nextLine();
 
 		do {
-
+			System.out.println("chiave amministratore inserita? s per si");
+			risposta = sc.nextLine();
+			if (risposta.equals("s"))
+				chiaveInserita = true;
 			while (chiaveInserita) {
 				System.out.println(
-						"pannello amministratore \n Selezione programma:(ritiro incassi),(diagnostica),(modifica prezzi),(modifica qnt)");
+						"pannello amministratore \n Selezione programma:(ritiro incassi(1),(diagnostica(2),(modifica prezzi(3),(modifica qnt(4))");
 				selezioneProgramma = sc.nextLine();
-				while (!(selezioneProgramma.equals("ritiro incassi") || selezioneProgramma.equals("diagnostica")
-						|| selezioneProgramma.equals("modifica prezzi") || selezioneProgramma.equals("modifica qnt"))) {
-					System.out.println("(ritiro incassi),(diagnostica),(modifica prezzi),(modifica qnt)");
+				while (!(selezioneProgramma.equals("1") || selezioneProgramma.equals("2")
+						|| selezioneProgramma.equals("3") || selezioneProgramma.equals("4"))) {
+					System.out.println("(ritiro incassi(1),(diagnostica(2),(modifica prezzi(3),(modifica qnt(4))");
 					selezioneProgramma = sc.next();
 				}
-				if (selezioneProgramma.equals("ritiro incassi")) {
+				if (selezioneProgramma.equals("1")) {
 					System.out.println("Incasso: " + incasso);
 					incasso = 0;
-				} else if (selezioneProgramma.equals("diagnostica")) {
+				} else if (selezioneProgramma.equals("2")) {
 					boolean guasto = false; // approssimazione della diagnostica
 					if (guasto)
 						System.out.println("errore rilevato");
 					else
 						System.out.println("nessun errore");
 
-				} else if (selezioneProgramma.equals("modifica prezzi")) {
+				} else if (selezioneProgramma.equals("3")) {
 					System.out.println("selezione codice bevanda");
 					int n = sc.nextInt();
 					sc.nextLine();
@@ -64,7 +65,7 @@ public class Main {
 					int z = sc.nextInt();
 					sc.nextLine();
 					prezzo[n] = z;
-				} else if (selezioneProgramma.equals("modifica qnt")) {
+				} else if (selezioneProgramma.equals("4")) {
 					System.out.println("selezione codice bevanda");
 					int c = sc.nextInt();
 					sc.nextLine();
@@ -73,7 +74,12 @@ public class Main {
 					sc.nextLine();
 					qntBevande[c] = qntBevande[c] + v;
 				}
-				System.out.println("Per uscire rimuovere chiavetta \n" + "Premere INVIO per continuare");
+				System.out.println("Per uscire rimuovere chiavetta");
+				System.out.println("chiave amministratore rimossa? s per si");
+				risposta = sc.nextLine();
+				if (risposta.equals("s"))
+					chiaveInserita = false;
+				System.out.println("Premere INVIO per continuare");
 				sc.nextLine();
 
 			}
@@ -143,11 +149,6 @@ public class Main {
 			}
 			if (trovato == false)
 				System.out.println("Bevanda non disponibile"); // bevanda non disponibile
-
-			/*
-			 * System.out.println("vuoi acquistare altri prodotti? si/no"); risposta =
-			 * sc.nextLine();
-			 */
 
 		} while (true); // check per il ciclo
 	}
