@@ -11,11 +11,11 @@ public class Main {
 		int codiceBevande[] = new int[nBevande];
 		int qntBevande[] = new int[nBevande];
 		int i = 0;
-		String metodoPagamento, risposta;
-		float contInseriti, resto, credChiavetta;
-		System.out.println("inserisci credito chiavetta"); // approssimazione di un credito pre esistente della chiavetta
-		credChiavetta = sc.nextFloat();
-		sc.nextLine();
+		String metodoPagamento, risposta, selezioneProgramma;
+		float contInseriti, resto, credChiavetta, incasso = 0;
+		boolean chiaveInserita = false;
+
+		System.out.println("Benvenuto per favore inserire lo stock iniziale della macchina");
 
 		for (i = 0; i < nBevande; i++) { // creazione dell'inventario della macchina
 			System.out.println("inserire codice bevanda:");
@@ -26,9 +26,60 @@ public class Main {
 			System.out.println("inserire quantità disponibile bevanda:");
 			qntBevande[i] = sc.nextInt();
 			sc.nextLine();
-
 		}
+
+			System.out.println("inserisci credito chiavetta"); // approssimazione di un credito pre esistente della
+			// chiavetta
+			credChiavetta = sc.nextFloat();
+			sc.nextLine();
+
+		
+
 		do {
+
+			while (chiaveInserita) {
+				System.out.println(
+						"pannello amministratore \n Selezione programma:(ritiro incassi),(diagnostica),(modifica prezzi),(modifica qnt)");
+				selezioneProgramma = sc.nextLine();
+				while (!(selezioneProgramma.equals("ritiro incassi") || selezioneProgramma.equals("diagnostica")
+						|| selezioneProgramma.equals("modifica prezzi") || selezioneProgramma.equals("modifica qnt"))) {
+					System.out.println("(ritiro incassi),(diagnostica),(modifica prezzi),(modifica qnt)");
+					selezioneProgramma = sc.next();
+				}
+				if (selezioneProgramma.equals("ritiro incassi")) {
+					System.out.println("Incasso: " + incasso);
+					incasso = 0;
+				} else if (selezioneProgramma.equals("diagnostica")) {
+					boolean guasto = false; // approssimazione della diagnostica
+					if (guasto)
+						System.out.println("errore rilevato");
+					else
+						System.out.println("nessun errore");
+
+				} else if (selezioneProgramma.equals("modifica prezzi")) {
+					System.out.println("selezione codice bevanda");
+					int n = sc.nextInt();
+					sc.nextLine();
+					System.out.println("inserire prezzo aggiornato");
+					int z = sc.nextInt();
+					sc.nextLine();
+					prezzo[n] = z;
+				} else if (selezioneProgramma.equals("modifica qnt")) {
+					System.out.println("selezione codice bevanda");
+					int c = sc.nextInt();
+					sc.nextLine();
+					System.out.println("inserire qnt rifornita");
+					int v = sc.nextInt();
+					sc.nextLine();
+					qntBevande[c] = qntBevande[c] + v;
+				}
+				System.out.println("Per uscire rimuovere chiavetta \n" + "Premere INVIO per continuare");
+				sc.nextLine();
+
+			}
+
+			// parte utente
+
 			System.out.println("Selezionare bevanda:"); // selezione prodotto
 			boolean trovato = false;
 			int selezione = sc.nextInt();
@@ -49,7 +100,8 @@ public class Main {
 							contInseriti = sc.nextFloat();
 							sc.nextLine();
 							while (contInseriti < prezzo[i]) {
-								System.out.println((prezzo[i] - contInseriti) + "€ rimanenti"); // aggiunta monete rimanenti
+								System.out.println((prezzo[i] - contInseriti) + "€ rimanenti"); // aggiunta monete
+																								// rimanenti
 								float tempCont = sc.nextFloat();
 								sc.nextLine();
 								contInseriti = contInseriti + tempCont;
@@ -60,13 +112,17 @@ public class Main {
 								System.out.println("il resto è : " + resto);
 								System.out.println("ritirare bevanda");
 								qntBevande[i]--; // riduzione stock bevanda
+								incasso = incasso + prezzo[i] - resto;
+
 							} else {
 								System.out.println("ritirare bevanda");
-							qntBevande[i]--; // riduzione stock bevanda
+								qntBevande[i]--; // riduzione stock bevanda
+								incasso = incasso + prezzo[i];
 							}
 
 						} else {
-							while (credChiavetta < prezzo[i]) { // credito insufficiente procedura per ricaricare chiavetta
+							while (credChiavetta < prezzo[i]) { // credito insufficiente procedura per ricaricare
+																// chiavetta
 								System.out.println("Credito insufficiente");
 								System.out.println("Ricaricare chiavetta inserire contanti");
 								float tempCred = sc.nextFloat();
@@ -76,6 +132,7 @@ public class Main {
 
 							System.out.println("ritirare bevanda"); // credito sufficiente,riduzione stock bevanda
 							qntBevande[i]--;
+							incasso = incasso + prezzo[i];
 							credChiavetta = credChiavetta - prezzo[i];
 						}
 
@@ -87,10 +144,11 @@ public class Main {
 			if (trovato == false)
 				System.out.println("Bevanda non disponibile"); // bevanda non disponibile
 
-			System.out.println("vuoi acquistare altri prodotti? si/no");
-			risposta = sc.nextLine();
+			/*
+			 * System.out.println("vuoi acquistare altri prodotti? si/no"); risposta =
+			 * sc.nextLine();
+			 */
 
-		} while (risposta.equals("si")); // check per il ciclo
-		sc.close();
+		} while (true); // check per il ciclo
 	}
 }
